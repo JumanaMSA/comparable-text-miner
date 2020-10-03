@@ -91,28 +91,28 @@ x_seperator = '\nXXXXXXX\n' # define document separator (7 Xs). This separator i
 arabic_punct = ''' ` ÷ × ؛ < > _ ( ) * & ^ % ] [ ـ ، / : " ؟ . , ' { } ~ ¦ + | !  ”  …  “ –   ـ  '''
 arabic_diacritics = '''  َ     ُ       ِ      ّ       ً      ٌ       ٍ      ْ     '''
 
-arabic_punctUnicode = arabic_punct.decode('utf-8')
+arabic_punctUnicode = arabic_punct
 arabic_punct = arabic_punct.split()
 arabic_punctUnicode = arabic_punctUnicode.split()
 
-arabic_diacritics_unicode = arabic_diacritics.decode('utf-8')
+arabic_diacritics_unicode = arabic_diacritics
 arabic_diacritics = arabic_diacritics.split()
 arabic_diacritics_unicode = arabic_diacritics_unicode.split()
 
 english_punt = list(string.punctuation)
-english_puntUnicode = list(string.punctuation.decode('utf-8'))
+english_puntUnicode = list(string.punctuation)
 
 # Arabic punctuations and dicritis + English and Arabic
 punctuations = set( english_punt + english_puntUnicode + arabic_punct + arabic_punctUnicode + arabic_diacritics + arabic_diacritics_unicode)
 
 englishStopWords = stopwords.words('english')
-englishStopWords_unicode = ' '.join(englishStopWords).decode('utf-8').split()
+englishStopWords_unicode = ' '.join(englishStopWords).split()
 
 # Arabic stopwords. This list are obtained from http://www.ranks.nl/stopwords/arabic
 
 asw = open('stopwords.txt').read()
 
-aswUinicode = asw.decode('utf-8')
+aswUinicode = asw
 arabicStopWords =  asw.split() + aswUinicode.split()
 
 # Arabic stopwords. This list are obtained from https://code.google.com/p/stop-words/
@@ -259,7 +259,7 @@ def getLemma(text, contextFlag=False):
 # Given a Naive Bayes classifier, classify a text with a given certaintaity
 def classify_text(text, classifier, certainity, g, unicodeFlag):
 	#1. process text
-	if unicodeFlag: text = text.decode('utf-8')
+	if unicodeFlag: text = text
 	word_list = process_text(text, removePunct=True, removeSW=False, removeNum=False)
 
 	#2. generate ngrams
@@ -385,14 +385,14 @@ for l in eng_dict_lines:
 	tokens = l.split('\t')
 	key = tokens[0][:-2].strip()
 	eng_dict_key.append(key)
-	word = tokens[2].strip().decode('utf-8')
+	word = tokens[2].strip()
 	eng_dict_word.append(word)
 
 for l in arb_dict_lines:
 	tokens = l.split('\t')
 	key = tokens[0][:-2].strip()
 	arb_dict_key.append(key)
-	word = tokens[2].strip().decode('utf-8')
+	word = tokens[2].strip()
 	arb_dict_word.append(word)
 
 ###################################################################################
@@ -525,9 +525,9 @@ def load_corpus(corpus_file, corpus_type):
 	corpus = None
 	global doc_separator
 	if corpus_type == 'comparable':
-		corpus = open(corpus_file).read().decode('utf-8').split(doc_separator); del corpus[-1]
+		corpus = open(corpus_file).read().split(doc_separator); del corpus[-1]
 	if corpus_type == 'parallel':
-		corpus = open(corpus_file).read().decode('utf-8').splitlines()
+		corpus = open(corpus_file).read().splitlines()
 	if not corpus:
 		print('corpus type is not supported... The corpus should be parallel or comparable')
 	return corpus
@@ -812,7 +812,7 @@ def split_wikipedia_docs(corpus_file, output_path, doc_len=30):
 # takes a wikipedia corpus (extracted by WikiExtractor.py) and splits the corpus into documents and clean them and returns an array
 def split_wikipedia_docs_into_array(corpus_file, doc_len=30):
 	documents = []
-	corpus = open(corpus_file).read().decode('utf-8').split('</doc>')
+	corpus = open(corpus_file).read().split('</doc>')
 	for d in corpus:
 		#d = strip_html_tags(d)
 		# if the number of words in the document is greater than doc_len, then the document will be extracted
