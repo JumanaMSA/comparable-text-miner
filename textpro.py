@@ -4,8 +4,8 @@
 '''
 # Comparable text miner
 
-# Description 
-Comparable document miner: Arabic-English morphological analysis, text processing, n-gram features extraction, POS tagging, dictionary translation, documents alignment, corpus information, text classification, tf-idf computation, text similarity computation, HTML documents cleaning, and others. 
+# Description
+Comparable document miner: Arabic-English morphological analysis, text processing, n-gram features extraction, POS tagging, dictionary translation, documents alignment, corpus information, text classification, tf-idf computation, text similarity computation, HTML documents cleaning, and others.
 
 This code is implemented by Motaz SAAD (motaz.saad@gmail.com) during his PhD work. The PhD thesis is available at: https://sites.google.com/site/motazsite/Home/publications/saad_phd.pdf
 
@@ -21,20 +21,20 @@ Then, you can use functions as follows:
 clean_text = process_text(text)
 
 # Dependencies
-This software depends on the following python packages scipy, numpy, nltk, sklearn, bs4. Please make sure that they are installed before using this software. 
+This software depends on the following python packages scipy, numpy, nltk, sklearn, bs4. Please make sure that they are installed before using this software.
 
 # References
 This software uses the following resources:
-- Arabic stopwords: http://www.ranks.nl/stopwords/arabic 
+- Arabic stopwords: http://www.ranks.nl/stopwords/arabic
 - Open Multilingual WordNet (OMW) dictionaries http://compling.hss.ntu.edu.sg/omw/ The references of OMW are listed below:
 	- Francis Bond and Kyonghee Paik (2012), A survey of wordnets and their licenses In Proceedings of the 6th Global WordNet Conference (GWC 2012). Matsue. 64–71.
-	- Francis Bond and Ryan Foster (2013), Linking and extending an open multilingual wordnet. In 51st Annual Meeting of the Association for Computational Linguistics: ACL-2013. Sofia. 1352–1362. 
+	- Francis Bond and Ryan Foster (2013), Linking and extending an open multilingual wordnet. In 51st Annual Meeting of the Association for Computational Linguistics: ACL-2013. Sofia. 1352–1362.
 
 - ISRI Arabic Stemmer, which is a rooting algorithm for Arabic text. The reference of ISRI Arabic Stemmer is below:
 	- Taghva, K., Elkoury, R., and Coombs, J. 2005. Arabic Stemming without a root dictionary. Information Science Research Institute. University of Nevada, Las Vegas, USA.
- 
 
-- This software modifies the ISRI Arabic Stemmer to perform light stemming for Arabic words. 
+
+- This software modifies the ISRI Arabic Stemmer to perform light stemming for Arabic words.
 
 '''
 
@@ -108,7 +108,7 @@ punctuations = set( english_punt + english_puntUnicode + arabic_punct + arabic_p
 englishStopWords = stopwords.words('english')
 englishStopWords_unicode = ' '.join(englishStopWords).decode('utf-8').split()
 
-# Arabic stopwords. This list are obtained from http://www.ranks.nl/stopwords/arabic 
+# Arabic stopwords. This list are obtained from http://www.ranks.nl/stopwords/arabic
 
 asw = open('stopwords.txt').read()
 
@@ -191,7 +191,7 @@ def lightStemAr(word_list):
 	result = []
 	arstemmer = ISRIStemmer()
 	for word in word_list:
-		word = arstemmer.norm(word, num=1)  #  remove diacritics which representing Arabic short vowels  
+		word = arstemmer.norm(word, num=1)  #  remove diacritics which representing Arabic short vowels
 		if not word in arstemmer.stop_words:   # exclude stop words from being processed
 			word = arstemmer.pre32(word)        # remove length three and length two prefixes in this order
 			word = arstemmer.suf32(word)        # remove length three and length two suffixes in this order
@@ -304,7 +304,7 @@ def build_features(doc_feat_grams, corpus_feat_grams):
 # evaluate predicted results using true values.
 # evaluation metrics are acccuracy, precicion, recall and f-measure.
 def evaluate(trueValues, predicted, decimals, note):
-	print note
+	print(note)
 	label = 1
 	avg = 'weighted'
 	a = accuracy_score(trueValues, predicted)
@@ -315,27 +315,27 @@ def evaluate(trueValues, predicted, decimals, note):
 	f1c1 = fclasses[0]; f1c2 = fclasses[1]
 	fw = (f1c1 + f1c2)/2.0
 
-	print 'accuracy:\t', str(round(a,decimals))
-	print 'precision:\t', str(round(p,decimals))
-	print 'recall:\t', str(round(r,decimals))
-	print 'avg f1:\t', str(round(avg_f1,decimals))
-	print 'c1 f1:\t', str(round(f1c1,decimals))
-	print 'c2 f1:\t', str(round(f1c2,decimals))
-	print 'avg(c1,c2):\t', str(round(fw,decimals))
-	print '------------'
+	print('accuracy:\t', str(round(a,decimals)))
+	print('precision:\t', str(round(p,decimals)))
+	print('recall:\t', str(round(r,decimals)))
+	print('avg f1:\t', str(round(avg_f1,decimals)))
+	print('c1 f1:\t', str(round(f1c1,decimals)))
+	print('c2 f1:\t', str(round(f1c2,decimals)))
+	print('avg(c1,c2):\t', str(round(fw,decimals)))
+	print('------------')
 
 ###################################################################################
 
 
 # split a parallel or comparable corpus into two parts
 def split_corpus(source_corpus, target_corpus, percentage):
-	print 'len(source_corpus) == len(target_corpus)', len(source_corpus), '==' , len(target_corpus) , len(source_corpus) == len(target_corpus)
-	if len(source_corpus) != len(target_corpus): print 'FAILED: the corpus is not aligned correclty'; return None
+	print('len(source_corpus) == len(target_corpus)', len(source_corpus), '==' , len(target_corpus) , len(source_corpus) == len(target_corpus))
+	if len(source_corpus) != len(target_corpus): print('FAILED: the corpus is not aligned correclty'); return None
 
 	size = len(source_corpus)
 	p1 = int (len(source_corpus) * percentage )
 	p2 = len(source_corpus) - p1
-	print 'size, p1, p2: ', size, p1, p2
+	print('size, p1, p2: ', size, p1, p2)
 
 	udoc = []
 
@@ -370,7 +370,7 @@ def split_corpus(source_corpus, target_corpus, percentage):
 
 # To cite these dictionaries:
 # Francis Bond and Kyonghee Paik (2012), A survey of wordnets and their licenses In Proceedings of the 6th Global WordNet Conference (GWC 2012). Matsue. 64–71.
-# Francis Bond and Ryan Foster (2013), Linking and extending an open multilingual wordnet. In 51st Annual Meeting of the Association for Computational Linguistics: ACL-2013. Sofia. 1352–1362. 
+# Francis Bond and Ryan Foster (2013), Linking and extending an open multilingual wordnet. In 51st Annual Meeting of the Association for Computational Linguistics: ACL-2013. Sofia. 1352–1362.
 
 eng_dict_file = 'wordnet/wn-data-eng.tab'
 arb_dict_file = 'wordnet/wn-data-arb.tab'
@@ -488,7 +488,7 @@ def vocab(text):
 # remove empty lines and white spaces (remove empty lines and keep '\n' in the text)
 def pretty_print(text):
 	lines = text.splitlines()
-	filtered1 = filter(lambda x: not re.match(r'^\s*$', x), lines)
+	filtered1 = [x for x in lines if not re.match(r'^\s*$', x)]
 	filtered2 = [whiteSpace.sub(' ', l).strip() for l in filtered1]
 	cleantext = '\n'.join(filtered2)
 	return cleantext
@@ -516,7 +516,7 @@ def merge_source_target_docs(source_corpus, target_corpus):
 	merged_corpus = []
 	for source_doc, target_doc in zip(source_corpus, target_corpus):
 		merged_corpus.append(source_doc + target_doc)
-	
+
 	return merged_corpus
 
 ##################################################################################
@@ -528,22 +528,22 @@ def load_corpus(corpus_file, corpus_type):
 		corpus = open(corpus_file).read().decode('utf-8').split(doc_separator); del corpus[-1]
 	if corpus_type == 'parallel':
 		corpus = open(corpus_file).read().decode('utf-8').splitlines()
-	if not corpus: 
-		print 'corpus type is not supported... The corpus should be parallel or comparable'
+	if not corpus:
+		print('corpus type is not supported... The corpus should be parallel or comparable')
 	return corpus
 ##################################################################################
 
 def prepare_gensim_corpus(corpus_name, corpus, output_path, min_freq=5):
 	if not output_path.endswith('/'): output_path = output_path + '/'
 	check_dir(output_path) # if directory does not exist, then create
-	
+
 	logging.info( 'building gensim corpus and dictionary for %s corpus', corpus_name )
 	logging.info( 'loading corpus' )
 	texts = [[word for word in process_text(document, removePunct=True, removeSW=True, removeNum=True)] for document in corpus]
 	logging.info( 'tokenizing' )
 	all_tokens = [item for sublist in texts for item in sublist]
 	logging.info( 'mark tokens which have frequency less than %d', min_freq )
-	tokens_once = set([k for k, v in collections.Counter(all_tokens).iteritems() if v < min_freq ])
+	tokens_once = set([k for k, v in collections.Counter(all_tokens).items() if v < min_freq ])
 	logging.info( '|D|=%d' , len(texts) )
 	logging.info( 'filter low frequency tokens' )
 	texts = [[word for word in text if word not in tokens_once] for text in texts]
@@ -552,26 +552,26 @@ def prepare_gensim_corpus(corpus_name, corpus, output_path, min_freq=5):
 	dictionary = corpora.Dictionary(texts)
 	logging.info( 'saving dictionary' )
 	dictFile = output_path + corpus_name + '.dict'
-	dictionary.save(dictFile) 
+	dictionary.save(dictFile)
 	logging.info( 'building corpus in  mm format' )
 	corpus = [dictionary.doc2bow(text) for text in texts]
 	logging.info( 'saving corpus' )
 	gensim_corpus_file = output_path + corpus_name + '.mm'
 	corpora.MmCorpus.serialize(gensim_corpus_file, corpus)
 	logging.info( 'computing tfidf' )
-	tfidf = models.TfidfModel(corpus) # tfidf model 
-	corpus_tfidf = tfidf[corpus] # tfidf corpus 
+	tfidf = models.TfidfModel(corpus) # tfidf model
+	corpus_tfidf = tfidf[corpus] # tfidf corpus
 	logging.info( 'saving tfidf corpus' )
 	corpus_tfidf_file = output_path + corpus_name + '.tfidf.mm'
 	corpora.MmCorpus.serialize(corpus_tfidf_file, corpus_tfidf)
 	logging.info( 'gensim corpus is ready' )
 ##################################################################################
-	
+
 def build_lsi_model(corpus_name, corpus_path, topics=300):
 	logging.info( 'building lsi model for %s corpus', corpus_name )
 	dictFile = corpus_path + corpus_name + '.dict'
 	corpus_tfidf_file = corpus_path + corpus_name + '.tfidf.mm'
-	
+
 	logging.info( 'loading dictionary ...' )
 	dictionary = corpora.Dictionary.load(dictFile)
 	logging.info( 'loading tfidf corpus ...' )
@@ -586,86 +586,86 @@ def build_lsi_model(corpus_name, corpus_path, topics=300):
 
 def align_documents_lsi(source_test_corpus, target_test_corpus, model_path, model_name, output_path, top_n=20, doc_separator=x_seperator):
 	logging.info( 'aligning source and target documents using LSI model' )
-	
+
 	dictionaryFile = model_path +  model_name + '.dict'
 	lsiFile = model_path +  model_name + '.lsi'
-	
+
 	dictionary = corpora.Dictionary.load(dictionaryFile) ; logging.info(  'dictionary loaded' )
 	lsi = models.LsiModel.load(lsiFile) ; logging.info(  'lsi model loaded' )
-	
+
 	logging.info( '# of source docs %d \t# of target docs %d', len(source_test_corpus),  len(target_test_corpus) )
-	
+
 	source_lsi_corpus = generateLSIvectors(source_test_corpus, dictionary, lsi)
 	logging.info( 'projects source corpus into LSI space' )
 	target_lsi_corpus = generateLSIvectors(target_test_corpus, dictionary, lsi)
 	logging.info( 'projects target corpus into LSI space' )
-	
-	allSims = [] ; doc_tuple = [] ; source_index = 0 
-	
+
+	allSims = [] ; doc_tuple = [] ; source_index = 0
+
 	for d in source_lsi_corpus:
 		target_index, sim = getComparable(d, target_lsi_corpus)
 		allSims.append(sim)
 		source_doc = source_test_corpus[source_index] ; target_doc = target_test_corpus[target_index]
-		del target_lsi_corpus[target_index] ; 
+		del target_lsi_corpus[target_index] ;
 		del target_test_corpus[target_index] # remove the already aligned document from the target corpus
 		doc_tuple.append((source_index,target_index, source_doc, target_doc))
 		if not target_lsi_corpus: break # all target docs are aligned
 		source_index+=1
-		
+
 	sortedAllSims = sorted(enumerate(allSims), key=lambda item: -item[1])
 	topNList = sortedAllSims[:top_n]
 	out = open (output_path + 'results.txt', 'w')
 	count = 0
-	print '\n#, src, target, sim'
+	print('\n#, src, target, sim')
 	for e in topNList:
 		i, sim = e
 		srcIndx = doc_tuple[i][0] ; targetIndx = doc_tuple[i][1] ; sdoc = doc_tuple[i][2] ; tdoc = doc_tuple[i][3]
-		print count, srcIndx, targetIndx, '%0.2f' % sim
-		print>>out, count, srcIndx, targetIndx, '%0.2f' % sim
+		print(count, srcIndx, targetIndx, '%0.2f' % sim)
+		print(count, srcIndx, targetIndx, '%0.2f' % sim, file=out)
 		source_out = open(output_path + str(count) + '.source.txt', 'w')
 		target_out = open(output_path + str(count) + '.target.txt' , 'w')
-		print>>source_out, sdoc.encode('utf-8')
-		print>>target_out, tdoc.encode('utf-8')
-		source_out.close(); target_out.close(); count+=1	
+		print(sdoc.encode('utf-8'), file=source_out)
+		print(tdoc.encode('utf-8'), file=target_out)
+		source_out.close(); target_out.close(); count+=1
 	out.close();
 	logging.info( 'aligning source and target documents using LSI model is done!' )
 ##################################################################################
 
 def align_sentences_lsi(source_sentences, target_sentences, model_path, model_name):
 	logging.info( 'Sentence level alignment using LSI' )
-	
+
 	dictionaryFile = model_path +  model_name + '.dict'
 	lsiFile = model_path +  model_name + '.lsi'
-	
+
 	dictionary = corpora.Dictionary.load(dictionaryFile) ; logging.info( 'dictionary loaded' )
 	lsi = models.LsiModel.load(lsiFile) ; logging.info( 'lsi model loaded' )
-	
-	source_lsi_sentences = generateLSIvectors(source_sentences, dictionary, lsi); 
+
+	source_lsi_sentences = generateLSIvectors(source_sentences, dictionary, lsi);
 	logging.info( 'projects source sentences into LSI space')
-	target_lsi_sentences = generateLSIvectors(target_sentences, dictionary, lsi); 
+	target_lsi_sentences = generateLSIvectors(target_sentences, dictionary, lsi);
 	logging.info( 'projects target sentences into LSI space' )
-	
-	source_index = 0 	
+
+	source_index = 0
 	new_source_doc = [] ; new_target_doc = []
-	
+
 	for d in source_lsi_sentences:
 		target_index, sim = getComparable(d, target_lsi_sentences)
 		source_sent = source_sentences[source_index] ; target_sent = target_sentences[target_index]
-		del target_lsi_sentences[target_index] ; 
+		del target_lsi_sentences[target_index] ;
 		del target_sentences[target_index] # remove the already aligned sentences from the target document
-		new_source_doc.append(source_sent) 
+		new_source_doc.append(source_sent)
 		new_target_doc.append(target_sent)
 		if not target_lsi_sentences: break # all target sentences are aligned
 		source_index+=1
-		
+
 	return new_source_doc, new_target_doc
 ##################################################################################
 # projecting a corpus into LSI space
 def generateLSIvectors(corpus, dictionary, lsi):
 	LSIcorpus = []
-	for d in corpus:		
+	for d in corpus:
 		vec_bow = dictionary.doc2bow(process_text(d))
-		vec_lsi = lsi[vec_bow] 
+		vec_lsi = lsi[vec_bow]
 		LSIcorpus.append(vec_lsi)
 	return LSIcorpus
 ##################################################################################
@@ -710,7 +710,7 @@ def get_interlanguage_links_from_wikitext(wiki_text, language_code_list=lang_lis
 	for code in language_code_list:
 		link = find_between(wiki_text, '[[' + code + ':', ']]')
 		if link: interlinks.append('[[' + code + ':' + link + ']]')
-	return interlinks	
+	return interlinks
 ##################################################################################
 def get_interlanguage_links_sql(doc_id, db_cursor, lang_code):
 	interlinks = []
@@ -721,7 +721,7 @@ def get_interlanguage_links_sql(doc_id, db_cursor, lang_code):
     	ll_from = '%d' ''' % (lang_code, doc_id)
 	db_cursor.execute(sql)
 	results = db_cursor.fetchall()
-	for row in results: 
+	for row in results:
 		lang = row[0] ; title = row[1]
 		interlinks.append('[[' + lang + ':' + title + ']]')
 	return interlinks
@@ -740,61 +740,61 @@ def get_title_from_interlanguage_links(links, language_code):
 ##################################################################################
 
 def aligning_documents_by_interlanguage_links(source_corpus_file, target_corpus_file, source_language, target_language, output_path):
-		
+
 	if not output_path.endswith('/'): output_path = output_path + '/'
 	check_dir(output_path) # if directory does not exist, then create
-		
+
 	logging.info( 'aliging %s and %s wikipeida documents using interlanguage links',  source_language, target_language)
 	source_docs = split_wikipedia_docs_into_array(source_corpus_file)
 	logging.info( 'source corpus is loaded')
 	target_docs = split_wikipedia_docs_into_array(target_corpus_file)
 	logging.info( 'target corpus is loaded')
-	
+
 	target_titles = [get_title_from_interlanguage_links(d, source_language) for d in target_docs]
-	
+
 	logging.info( 'start aligning...')
-	source_out = open(output_path +  source_language + '-wiki.txt', 'w') 
-	target_out = open(output_path +  target_language + '-wiki.txt', 'w') 
+	source_out = open(output_path +  source_language + '-wiki.txt', 'w')
+	target_out = open(output_path +  target_language + '-wiki.txt', 'w')
 	count = 1
-	
-	my_prperc = pyprind.ProgPercent(len(source_docs)) 
-	
+
+	my_prperc = pyprind.ProgPercent(len(source_docs))
+
 	for i in range(len(source_docs)):
-		my_prperc.update() # print progress 
+		my_prperc.update() # print progress
 		source_title = get_title_from_interlanguage_links(source_docs[i], source_language)
-		try: 
+		try:
 			index = target_titles.index(source_title)
-			text_out = source_docs[i] 
-			print>>source_out, text_out.encode('utf-8')
+			text_out = source_docs[i]
+			print(text_out.encode('utf-8'), file=source_out)
 			text_out = target_docs[index]
-			print>>target_out, text_out.encode('utf-8')
+			print(text_out.encode('utf-8'), file=target_out)
 			count += 1
 		except: continue
-				
-				
+
+
 	logging.info( 'aliging by document interlanguage links is done! ... \n %d documents are aligned', count)
 ##################################################################################
 
 ##################################################################################
 
 def aligning_doc_by_interlanguage_links(source_doc, target_corpus, source_language, target_language, output_path):
-	
+
 	source = None
 	target = None
-	
-	source_title = get_title_from_interlanguage_links(source_doc, source_language)			
-		
+
+	source_title = get_title_from_interlanguage_links(source_doc, source_language)
+
 	for d in target_corpus:
 		target_title = get_title_from_interlanguage_links(d, target_language)
 		if source_title == target_title:
 			source = source_doc
 			target = d
-			
-	return source, target		
-				
+
+	return source, target
+
 ##################################################################################
 
-# takes a wikipedia corpus (extracted by WikiExtractor.py) and splits the corpus into documents and clean them 
+# takes a wikipedia corpus (extracted by WikiExtractor.py) and splits the corpus into documents and clean them
 def split_wikipedia_docs(corpus_file, output_path, doc_len=30):
 	corpus = open(corpus_file).read().split('</doc>')
 	logging.info( 'processing %d wikipedia documents...', len(corpus))
@@ -803,7 +803,7 @@ def split_wikipedia_docs(corpus_file, output_path, doc_len=30):
 		doc = strip_html_tags(d)
 		if len(doc.split()) > doc_len: # if the number of words in the document is greater than doc_len, then the document will be extracted
 			out = open(output_path + os.path.basename(corpus_file) + str('-%07d' % count) + '.txt', 'w')
-			print>>out, doc.encode('utf-8')
+			print(doc.encode('utf-8'), file=out)
 			out.close(); count+=1
 	logging.info('%d documents are extracted', count)
 ##################################################################################
@@ -816,16 +816,16 @@ def split_wikipedia_docs_into_array(corpus_file, doc_len=30):
 	for d in corpus:
 		#d = strip_html_tags(d)
 		# if the number of words in the document is greater than doc_len, then the document will be extracted
-		if len(d.split()) > doc_len: 
+		if len(d.split()) > doc_len:
 			documents.append(d + '\n</doc>')
-			
+
 	return 	documents
 ##################################################################################
 
 def check_dir(path):
 	if not path.endswith('/'): path = path + '/'
 	if not os.path.exists(path): # if directory does not exist, then create
-		print path, 'does not exist... creating ....'
+		print(path, 'does not exist... creating ....')
 		os.makedirs(path)
 
 ##################################################################################
@@ -836,7 +836,7 @@ def omw_syn(word, language):
 ##################################################################################
 def split_list(L, n_parts):
 	chunk_size = len(L) / n_parts
-	chunks=[L[x:x+chunk_size] for x in xrange(0, len(L), chunk_size)]
+	chunks=[L[x:x+chunk_size] for x in range(0, len(L), chunk_size)]
 	return chunks
 ##################################################################################
 
@@ -844,8 +844,3 @@ def split_list(L, n_parts):
 
 
 ##################################################################################
-
-
-
-
-
